@@ -9,10 +9,11 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <link rel="stylesheet" href="pandoc.css">
 </head>
 <body>
 <h1 id="how-to-track-the-progress-of-deferred-objects">How to Track the Progress of Deferred Objects</h1>
-<p>A very elegant way of writing asynchronous code in <a href="http://www.nodejs.org">Node.js</a> is to use <a href="http://promises-aplus.github.io/promises-spec/">promises</a>. I've been using the <a href="https://github.com/kriskowal/q">Q</a> implementation of this idea.</p>
+<p>A very elegant way of writing asynchronous code in <a href="http://www.nodejs.org">Node.js</a> is to use <a href="http://promises-aplus.github.io/promises-spec/">promises</a>. I’ve been using the <a href="https://github.com/kriskowal/q">Q</a> implementation of this idea.</p>
 <p>So, instead of having functions that use callbacks to process the result of an asynchronous action, one returns a promise for that result. A promise then is an object that can be queried and that we can attach callbacks to dealing with resolution, rejection and progress.</p>
 <pre class="numberLines" startfrom="100"><code>var Q = require(&#39;q&#39;);
 
