@@ -47,13 +47,15 @@ function watch(prom){
     );
 }
 
-watch(doSomeStuff(defer,100)
-.then(
-    console.log,
-    console.log,
-    console.log
-));</code></pre>
-<p>When you run this you see this:</p>
+watch(
+    doSomeStuff(defer,100)
+    .then(
+        console.log,
+        console.log,
+        console.log
+    )
+);</code></pre>
+<p>When you run this in node.js you see this:</p>
 <pre><code>progress: 99
 progress: 98
 progress: 97
