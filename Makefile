@@ -1,7 +1,10 @@
 pandocopts = -t html5 -S -c pandoc.css -s
 blogentries = $(patsubst %.blog.md,%.blog.html,$(wildcard *.blog.md))
 
-all: index.html $(blogentries)
+all: index.html $(blogentries) README.md
+
+README.md: index.md
+	pandoc index.html -o README.md
 
 index.html: index.md blogindex.md
 	(cat $<;\
