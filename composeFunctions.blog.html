@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="pandoc.css">
+</head>
+<body>
+<h1 id="how-to-compose-functions-in-javascript">How to Compose Functions in Javascript</h1>
+<p>Of course you have heard of the <a href="http://underscorejs.org/#compose">_.compose</a> function in the <a href="http://underscorejs.org">Underscore</a> library. But thinking of function composition as an operator I would like to be able to write</p>
+<pre><code>f.g </code></pre>
+<p>But given how JS doesn’t let you define new operator, I guess i can make do with</p>
+<pre><code>f.after(g)</code></pre>
+<p>So, extending the Function.prototype thus</p>
+<pre><code>Function.prototype.after = function after (f){
+    if (typeof this !== &quot;function&quot;) {     
+        throw new TypeError(&quot;Function.prototype.after - can only compose with a function!&quot;);
+    }
+
+    var self = this;
+
+    return function(){
+        args = Array.prototype.slice.apply(arguments);
+        return self(f.apply(this, args));
+    };
+};</code></pre>
+<p>allows just that. So now you can do this:</p>
+<pre><code>function add1(x){
+    return x+1;
+}
+
+function add5(x){
+    return x+5;
+}
+
+function id(x){
+    return x;
+}
+
+console.log(add5.after(add1)(2)); // 8
+
+console.log(id.after(id)(&quot;hello&quot;, &quot;there&quot;)); // &quot;hello&quot;</code></pre>
+</body>
+</html>
