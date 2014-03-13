@@ -10,7 +10,7 @@ function composition as an operator I would like to be able to write
 f.g 
 ~~~~~~~
 
-But given how JS doesn't let you define new operator, I guess i can make do with
+Given how JS doesn't let you define new operators, I guess i can make do with
 
 ~~~~~~~
 f.after(g)
