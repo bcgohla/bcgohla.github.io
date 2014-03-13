@@ -11,7 +11,7 @@ f.g
 ~~~~~~~
 
 Given how JS doesn't let you define new operators, I guess i can make do with
-yes
+
 ~~~~~~~
 f.after(g)
 ~~~~~~~
