@@ -15,11 +15,10 @@
 <h1 id="how-to-compose-functions-in-javascript">How to Compose Functions in Javascript</h1>
 <p>Of course you have heard of the <a href="http://underscorejs.org/#compose">_.compose</a> function in the <a href="http://underscorejs.org">Underscore</a> library. But thinking of function composition as an operator I would like to be able to write</p>
 <pre><code>f.g </code></pre>
-<p>Given how JS doesn’t let you define new operators, I guess i can make do with</p>
-<pre><code>f.after(g)</code></pre>
+<p>Given how JS doesn’t let you define new operators, I guess i can make do with yes <sub><sub><sub><sub><sub><sub><sub> f.after(g) </sub></sub></sub></sub></sub></sub></sub></p>
 <p>So, extending the Function.prototype thus</p>
 <pre><code>Function.prototype.after = function after (f){
-    if (typeof this !== &quot;function&quot;) {     
+    if (typeof f !== &quot;function&quot;) {     
         throw new TypeError(&quot;Function.prototype.after - can only compose with a function!&quot;);
     }
 

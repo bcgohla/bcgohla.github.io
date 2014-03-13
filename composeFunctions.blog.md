@@ -11,7 +11,7 @@ f.g
 ~~~~~~~
 
 Given how JS doesn't let you define new operators, I guess i can make do with
-
+yes
 ~~~~~~~
 f.after(g)
 ~~~~~~~
@@ -20,7 +20,7 @@ So, extending the Function.prototype thus
 
 ~~~~~~~
 Function.prototype.after = function after (f){
-    if (typeof this !== "function") {     
+    if (typeof f !== "function") {     
         throw new TypeError("Function.prototype.after - can only compose with a function!");
     }
 
