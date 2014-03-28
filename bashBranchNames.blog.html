@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="pandoc.css">
+</head>
+<body>
+<h1 id="how-to-create-branch-tags-in-bash">How to create branch tags in bash</h1>
+<p>I need to create <a href="http://www.git-scm.org">git</a> topic branches a lot. They usually have the format</p>
+<pre><code>username/ISSUE/some-semi-lengthy-description</code></pre>
+<p>where the latter part comes from the title of a <a href="https://www.atlassian.com/software/jira">Jira</a> ticket. Because I love working on the command line I paste the ticket title to the <a href="http://en.wikipedia.org/wiki/GNU_Readline">readline</a> buffer after all the rest of the command to get something like this:</p>
+<pre><code>git checkout -b username/ISSUE/some semi lengthy description</code></pre>
+<p>Now, normally I would have to replace all the spaces with hyphens manually. Luckily this can be automated:</p>
+<ol type="1">
+<li>Write a <a href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)">bash</a> function that does the transformation for us.</li>
+</ol>
+<pre><code>function makeTicketName {
+    local input=${READLINE_LINE:$READLINE_POINT} ;
+    local output=&quot;`sed -e &#39;s/[\&quot;,.@]/ /gi&#39; &lt;&lt;&lt; $input`&quot; ;
+    output=&quot;`sed -e &#39;s/[^A-Za-z1-9_]/ /gi&#39; &lt;&lt;&lt; $output`&quot; ;
+    output=${READLINE_LINE/$input/&quot;`sed -e &#39;s/\s\+/-/gi&#39; &lt;&lt;&lt; $output`&quot;} ;
+    READLINE_LINE=$output
+}</code></pre>
+<p>This takes the line buffer from the insertion point on, applies the substitutions, puts it back together with the rest of the buffer content and then updates it.</p>
+<ol start="2" type="1">
+<li>Bind the function to a key sequence.</li>
+</ol>
+<pre><code>bind -x &#39;&quot;\C-x\C-t&quot;:makeTicketName&#39;</code></pre>
+<p>Put these things in your <code>~/.bashrc</code>, restart the shell.</p>
+<p>Now, <code>git checkout -b username/ISSUE/some semi lengthy description</code> becomes</p>
+<pre><code>git checkout -b username/ISSUE/some-semi-lengthy-description</code></pre>
+<p>upon moving the cursor to the last <code>/</code> for example and pressing <code>Control-x</code> followed by <code>Control-t</code>.</p>
+</body>
+</html>
